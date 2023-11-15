@@ -25,175 +25,173 @@ class bcolors:
     ORANGE = '\033[33m'
 
 
-
 def Registrarse():
-    tick = False
-   
-    usuario = str(input("Introduzca el nombre de usuario: " + bcolors.ORANGE)).strip().lower()
-    print(bcolors.SKYBLUE)
-    contraseña = getpass().strip()
-    if crear_directorio(usuario):
+   tick = False
+  
+   usuario = str(input("Enter your username: " + bcolors.ORANGE)).strip().lower()
+   print(bcolors.SKYBLUE)
+   contraseña = getpass().strip()
+   if crear_directorio(usuario):
 
-        escribir_contrasena_usuario(usuario, contraseña)
-        tick = True
-    else:
-        Error(4)
+       escribir_contrasena_usuario(usuario, contraseña)
+       tick = True
+   else:
+       Error(4)
 
-    return usuario, contraseña, tick
+   return usuario, contraseña, tick
 
 
 def IniciarSesion():
-    global usuario
-    usuario = input("Introduzca el nombre de usuario: " + bcolors.ORANGE).strip().lower()
-    print(bcolors.SKYBLUE)
-    contraseña = getpass().strip()
-    return contraseña == leer_contrasena_usuario(usuario)
-
-        
-    
-    
+   global usuario
+   usuario = input("Enter your username: " + bcolors.ORANGE).strip().lower()
+   print(bcolors.SKYBLUE)
+   contraseña = getpass().strip()
+   return contraseña == leer_contrasena_usuario(usuario)
+       
 
 def CrearContraseña():
-    global usuario
-    while True:
-        try:
-            longitud = int(input("Introduzca la longitud de la contraseña: " + bcolors.ORANGE))
-            print(bcolors.SKYBLUE)
-            break
-        except:
-            Error(1)
-    contraseña = cC(longitud)
-    while True:
-        try:
-            nombre = input("Introduzca el indicador con el que quiere guardar la contraseña: " + bcolors.ORANGE)
-            print(bcolors.SKYBLUE)
-            try:
-                crear_fichero(nombre, usuario)
-                escribir_fichero(nombre,usuario, contraseña)
-                break
-            except:
-                Error(2)
-        except:
-            Error(1)
-    return contraseña
+   global usuario
+   while True:
+       try:
+           longitud = int(input("Enter the length of the password: " + bcolors.ORANGE))
+           print(bcolors.SKYBLUE)
+           break
+       except:
+           Error(1)
+   contraseña = cC(longitud)
+   while True:
+       try:
+           nombre = input("Enter the indicator with which you want to save the password: " + bcolors.ORANGE)
+           print(bcolors.SKYBLUE)
+           try:
+               crear_fichero(nombre, usuario)
+               escribir_fichero(nombre,usuario, contraseña)
+               break
+           except:
+               Error(2)
+       except:
+           Error(1)
+   return contraseña
 
 
 def LeerContraseña():
-    num = int(input("Introduzca el indicador de la contraseña que quiere leer: " + bcolors.ORANGE))
-    print(bcolors.SKYBLUE)
-    try:
-        contraseña = leer_fichero(num, usuario)
-        return contraseña
-    except:
-        Error(2)
+   num = int(input("Enter the indicator of the password you want to read: " + bcolors.ORANGE))
+   print(bcolors.SKYBLUE)
+   try:
+       contraseña = leer_fichero(num, usuario)
+       return contraseña
+   except:
+       Error(2)
 
 
 def main():
-    if "Usuarios" not in os.listdir():
-        os.mkdir("Usuarios")
-    global usuario
-    global check
-    while True:
+   if "Usuarios" not in os.listdir():
+       os.mkdir("Usuarios")
+   global usuario
+   global check
+   while True:
+      
+       try:
+           if usuario != "":
+               
+               check = True
+               break
+   
+           opcion = Registro()
+           break
+       except:
+           Error(1)
+   if check == False:
+       if opcion == 1:
+           try:
+               usuario, contraseña, tick = Registrarse()
+               if tick:
+                  RegistroCorrecto(usuario, contraseña)
+           except:
+               Error(6)
+       elif opcion == 2:
+           try:
+               
+               check = IniciarSesion()
+               if check:
+                  print(bcolors.SKYBLUE)
+                  input("Press enter to continue...")
+                  os.system("cls")
+               elif not check:
+                  Error(5)
+               print(check)
+           except:
+               Error(5)
+       elif opcion == 3:
+           Despedida()
+   
+   if check:
+       while True:
+           try:
+                  opcion = Inicio()
+                  break
+           
+           except:
+               Error(1)
        
-        try:
-            if usuario != "":
-                
-                check = True
-                break
-    
-            opcion = Registro()
-            break
-        except:
-            Error(1)
-    if check == False:
-        if opcion == 1:
-            try:
-                usuario, contraseña, tick = Registrarse()
-                if tick:
-                    RegistroCorrecto(usuario, contraseña)
-            except:
-                Error(6)
-        elif opcion == 2:
-            try:
-                
-                check = IniciarSesion()
-                if check:
-                    print(bcolors.SKYBLUE)
-                    input("Pulse enter para continuar...")
-                    os.system("cls")
-                elif not check:
-                    Error(5)
-                print(check)
-            except:
-                Error(5)
-        elif opcion == 3:
-            Despedida()
-    
-    if check:
-        while True:
-            try:
-                    opcion = Inicio()
-                    break
-            
-            except:
-                Error(1)
-        
-        if opcion == 1:
-            try:
-                contraseña = CrearContraseña()
-            except:
-                Error(1)
-        elif opcion == 2:
-            try:
-                print("Las contraseñas que tiene guardadas son: \n")
-                mostrarNombres(usuario)
-                contraseña = LeerContraseña()
-                os.system("cls")
-                print("La contraseña es: " + contraseña)
-                sleep(2)
-                os.system("cls")
-                pyperclip.copy(contraseña)
-                print("La contraseña se ha copiado al portapapeles")
-                input("Pulse enter para continuar...")
-                
-            except:
-                Error(3)
+       if opcion == 1:
+           try:
+               contraseña = CrearContraseña()
+           except:
+               Error(1)
+       elif opcion == 2:
+           try:
+               print("The passwords you have saved are: \n")
+               mostrarNombres(usuario)
+               contraseña = LeerContraseña()
+               os.system("cls")
+               print("The password is: " + bcolors.GREEN + contraseña)
+               print(bcolors.SKYBLUE)
+               sleep(2)
+               os.system("cls")
+               pyperclip.copy(contraseña)
+               print("The password has been copied to the clipboard")
+               input("Press enter to continue...")
+               
+           except:
+               Error(3)
 
-        elif opcion == 3:
-            CerrarSesion()
-            usuario = ""
-            check = False
-          
+       elif opcion == 3:
+           CerrarSesion()
+           usuario = ""
+           check = False
+         
 
-        elif opcion == 4:
-            try:
-                borrar_directorio(usuario)
-                usuario = ""
-                check = False
-                input("Pulse enter para continuar...")
-            except:
-                Error(2)
+       elif opcion == 4:
+           try:
+               borrar_directorio(usuario)
+               usuario = ""
+               check = False
+               input("Press enter to continue...")
+           except:
+               Error(2)
 
-        elif opcion == 5:
-            try:
-                print("Las contraseñas que tiene guardadas son: \n")
-                mostrarNombres(usuario)
-                nombre = int(input("Introduzca el indicador de la contraseña que quiere borrar: " + bcolors.ORANGE))
-                print(bcolors.SKYBLUE)
-                borrar_fichero(nombre, usuario)
-                print("La contraseña se ha borrado correctamente")
-                input("Pulse enter para continuar...")
-            except:
-                Error(7)
+       elif opcion == 5:
+           try:
+               print("The passwords you have saved are: \n")
+               mostrarNombres(usuario)
+               nombre = int(input("Enter the indicator of the password you want to delete: " + bcolors.ORANGE))
+               print(bcolors.SKYBLUE)
+               borrar_fichero(nombre, usuario)
+               
+               print("The password has been deleted correctly")
+               input("Press enter to continue...")
+           except:
+               Error(7)
 
 
-        elif opcion == 6:
-            Despedida()
-    
-    else:
-        usuario = ""
-    
-    os.system("cls")
-    main()
+       elif opcion == 6:
+           Despedida()
+   
+   else:
+       usuario = ""
+   
+   os.system("cls")
+   main()
 
 main()
