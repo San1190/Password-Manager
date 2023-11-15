@@ -17,7 +17,7 @@ class bcolors:
 
 
 
-def getpass(prompt="Introduzca su contraseña: " + bcolors.ORANGE):
+def getpass(prompt="Put your password: " + bcolors.ORANGE):
     print(bcolors.SKYBLUE)
     print(prompt, end='', flush=True)
     password = ""
