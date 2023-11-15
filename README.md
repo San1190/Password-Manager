@@ -9,6 +9,7 @@ This Python script serves as a simple password manager with user registration, l
 - User registration and login
 - Create, read, and delete passwords
 - Secure password generation
+- Organised interface
 - User-friendly command-line interface
 - ...
 
