@@ -20,6 +20,7 @@ Make sure you have Python installed on your machine.
 
 ```bash
 pip install art
+pip install pyperclip
 ```
 
 **How to Run**
